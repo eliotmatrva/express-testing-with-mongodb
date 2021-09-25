@@ -1,14 +1,3 @@
-/*
-let fetchResponse = fetch('http://localhost:8081/api/users')
-    .then(response => response.text())
-    .then(data => {
-        let apiResponseElement = document.getElementById("apiDisplayElement");
-        apiResponseElement.innerText = data;
-        return data;
-    });
-console.log(fetchResponse);
-*/
-
 const myButton = document.getElementById("getAllUsers");
 myButton.addEventListener('click', function(e) {
   console.log('button was clicked');
@@ -16,6 +5,7 @@ myButton.addEventListener('click', function(e) {
   fetch('/api/users', {method: 'GET'})
     .then(response => response.text())
     .then(data => {
+      displayAllUsers.textContent = data;
       console.log(data);
     })
     .catch(function(error) {
@@ -23,11 +13,52 @@ myButton.addEventListener('click', function(e) {
     });
 });
 
-/*
-function getUser(event) {
-  log.textContent = `Bruh you did it! ${event.timeStamp}`;
+const resetFindUser = document.getElementById('resetFindUser');
+resetFindUser.addEventListener('click', function(e){
+  log.textContent = '';
+});
+
+const resetAllUsers = document.getElementById('resetAllUsers');
+resetAllUsers.addEventListener('click', function(e){
+  displayAllUsers.textContent = '';
+})
+
+const resetCreatedUser = document.getElementById('displayCreatedUser');
+resetCreatedUser.addEventListener('click', function(e){
+  displayCreatedUser.textContent ='';
+})
+
+ 
+function handleFindUser(event){
+  let email = document.getElementById("email");
+  log.textContent = `your user is ${email.value}`;
+  fetch(`/submit-form/${email.value}`, {method: 'POST'})
+  .then(response => response.text())
+  .then(data => {
+    console.log(data);
+    log.textContent = `your user is ${data}`;
+  })
   event.preventDefault();
-};
-const getUserForm = document.getElementById("getUserForm").addEventListener("submit", getUser);
+}
+
+function handleCreateUser(event){
+  let name = document.getElementById("newUserName");
+  let email = document.getElementById("newUserEmail");
+  let password = document.getElementById("newUserPassword");
+  let balance = document.getElementById("newUserBalance");
+  console.log('starting create user');
+  fetch(`/api/users/${name.value}/${email.value}/${password.value}/${balance.value}`, {method: 'POST'})
+  .then(response => response.text())
+  .then(data => {
+    console.log(data);
+    displayCreatedUser.textContent = `your user is ${data}`;
+  })
+  event.preventDefault();
+}
+
+const createUserForm = document.getElementById("createUserForm").addEventListener("submit", handleCreateUser);
+const getUserForm = document.getElementById("getUserForm").addEventListener("submit", handleFindUser);
 const log = document.getElementById('displayUser');
-*/
+const log2 = document.getElementById('displayAllUsers');
+
+

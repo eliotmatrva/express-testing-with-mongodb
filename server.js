@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+// const bodyParser = require('body-parser');
+app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }))
@@ -38,8 +40,12 @@ app.get('/api/users/:email', (req, res) => {
         })    
 });
 
-app.post('/submit-form', (req, res) => {
-    const email = req.body.email;
+app.post('/submit-form/:email', (req, res) => {    
+    if (!req.params.email){
+        res.status(400).send('Email is required.');
+        return;
+    }
+    let email = req.params.email;
     usersCollection.findOne({email: email})
         .then(result => {
             console.log('finding your user by email');
