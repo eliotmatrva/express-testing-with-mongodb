@@ -31,7 +31,7 @@ app.get('/api/users', (req, res) => {
             res.send(result); 
         });
 });
-
+/*
 app.get('/api/users/:email', (req, res) => {
     usersCollection.findOne({email: req.params.email})
         .then(result => {
@@ -39,8 +39,8 @@ app.get('/api/users/:email', (req, res) => {
             res.send(result);
         })    
 });
-
-app.post('/submit-form/:email', (req, res) => {    
+*/
+app.post('/users/findUser/:email', (req, res) => {    
     if (!req.params.email){
         res.status(400).send('Email is required.');
         return;
@@ -71,6 +71,15 @@ app.put('/api/users/:email/:balance', (req, res) => {
         {$set: {balance: req.params.balance}}
     )
     res.send(`updated ${req.params.email}'s balance to be ${req.params.balance}'`);
+});
+
+app.delete('/users/deleteUser/:email', (req, res) => {
+    let email = req.params.email;
+    usersCollection.remove({email: email})
+        .then(result => {
+            console.log(`Deleting user ${email}`);
+            res.send(result);
+        });
 });
 
 var listener = app.listen(8081, function() {

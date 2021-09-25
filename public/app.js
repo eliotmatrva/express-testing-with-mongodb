@@ -32,7 +32,7 @@ resetCreatedUser.addEventListener('click', function(e){
 function handleFindUser(event){
   let email = document.getElementById("email");
   log.textContent = `your user is ${email.value}`;
-  fetch(`/submit-form/${email.value}`, {method: 'POST'})
+  fetch(`/users/findUser/${email.value}`, {method: 'POST'})
   .then(response => response.text())
   .then(data => {
     console.log(data);
@@ -56,6 +56,24 @@ function handleCreateUser(event){
   event.preventDefault();
 }
 
+function handleDeleteUser(event){
+  let email = document.getElementById("deletedUserEmail");
+  displayDeletedUser.textContent = `your user is ${email.value}`;
+  fetch(`/users/deleteUser/${email.value}`, {method: 'DELETE'})
+  .then(response => response.text())
+  .then(data => {
+    console.log(data);
+    displayDeletedUser.textContent = `${
+      (data) => {
+        if (data.acknowledged){
+          return 'success';
+        }}
+    };`
+  })
+  event.preventDefault();
+}
+
+const deleteUserForm = document.getElementById("deleteUserForm").addEventListener("submit", handleDeleteUser);
 const createUserForm = document.getElementById("createUserForm").addEventListener("submit", handleCreateUser);
 const getUserForm = document.getElementById("getUserForm").addEventListener("submit", handleFindUser);
 const log = document.getElementById('displayUser');
