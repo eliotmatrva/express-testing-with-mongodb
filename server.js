@@ -65,12 +65,16 @@ app.post('/api/users/:name/:email/:password/:balance', (req, res) => {
     res.send(`added new user ${req.params.name}`);
 });
 
-app.put('/api/users/:email/:balance', (req, res) => {
+app.put('/users/updateBalance/:email/:balance', (req, res) => {
+    let email = req.params.email;
+    let balance = req.params.balance;
     usersCollection.updateOne(
-        {email: req.params.email},
-        {$set: {balance: req.params.balance}}
-    )
-    res.send(`updated ${req.params.email}'s balance to be ${req.params.balance}'`);
+        {email: email},
+        {$set: {balance: req.balance}})
+        .then(result => {
+            console.log(`Updated user ${email}'s balance to ${balance}`);
+            res.send(result);
+        })
 });
 
 app.delete('/users/deleteUser/:email', (req, res) => {

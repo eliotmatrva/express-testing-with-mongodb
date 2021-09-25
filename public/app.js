@@ -31,12 +31,12 @@ resetCreatedUser.addEventListener('click', function(e){
  
 function handleFindUser(event){
   let email = document.getElementById("email");
-  log.textContent = `your user is ${email.value}`;
+  displayUser.textContent = `your user is ${email.value}`;
   fetch(`/users/findUser/${email.value}`, {method: 'POST'})
   .then(response => response.text())
   .then(data => {
     console.log(data);
-    log.textContent = `your user is ${data}`;
+    displayUser.textContent = `your user is ${data}`;
   })
   event.preventDefault();
 }
@@ -51,7 +51,7 @@ function handleCreateUser(event){
   .then(response => response.text())
   .then(data => {
     console.log(data);
-    displayCreatedUser.textContent = `your user is ${data}`;
+    displayCreatedUser.textContent = `You added new user ${data}`;
   })
   event.preventDefault();
 }
@@ -60,23 +60,44 @@ function handleDeleteUser(event){
   let email = document.getElementById("deletedUserEmail");
   displayDeletedUser.textContent = `your user is ${email.value}`;
   fetch(`/users/deleteUser/${email.value}`, {method: 'DELETE'})
+  .then(response => response.json())
+  .then(data => {
+    if (data.deletedCount === 0) {
+      displayDeletedUser.textContent = `Could not delete ${email.value}.  Try a valid email`;
+      return;
+    }
+    console.log(JSON.stringify(data));
+    console.log(`delete successful? ${data.acknowledged}`);
+    displayDeletedUser.textContent = `You deleted user ${email.value}`;
+  });
+  event.preventDefault();
+};
+
+function handleUpdateUserBalance(event){
+  let email = document.getElementById("updateBalanceEmail");
+  let balance = document.getElementById("updatedBalance");
+  displayUpdatedUser.textContent = `your user is ${email.value}`;
+  displayUpdatedUserBalance.textContent = `This user's new balance is ${balance.value}`;
+  fetch(`/users/updateBalance/${email.value}/${balance.value}`, {method: 'PUT'})
   .then(response => response.text())
   .then(data => {
     console.log(data);
-    displayDeletedUser.textContent = `${
-      (data) => {
-        if (data.acknowledged){
-          return 'success';
-        }}
-    };`
+    displayUser.textContent = `your user is ${data}`;
   })
   event.preventDefault();
 }
 
+
 const deleteUserForm = document.getElementById("deleteUserForm").addEventListener("submit", handleDeleteUser);
 const createUserForm = document.getElementById("createUserForm").addEventListener("submit", handleCreateUser);
 const getUserForm = document.getElementById("getUserForm").addEventListener("submit", handleFindUser);
-const log = document.getElementById('displayUser');
-const log2 = document.getElementById('displayAllUsers');
+const updateUserBalanceForm = document.getElementById("updateUserBalanceForm").addEventListener("submit", handleUpdateUserBalance);
+const displayUser = document.getElementById('displayUser');
+const displayUpdatedUser = document.getElementById('displayUpdatedUser');
+//const displayOldUserBalance = document.getElementById('oldUserBalance');
+const displayUpdatedUserBalance = document.getElementById('updatedUserBalance');
+const displayDeletedUser = document.getElementById("displayDeletedUser");
+const displayAllUsers = document.getElementById("displayAllUsers");
+const displayCreatedUser = document.getElementById("displayCreatedUser");
 
 

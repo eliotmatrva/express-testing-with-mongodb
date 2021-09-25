@@ -29,7 +29,7 @@
             <input id="newUserBalance" type="number" name="newUserBalance" placeholder="account balance" />
             <input type="submit">
         </form>
-        <button id="createUser">Clear User</button>
+        <button id="resetAllUsers">Clear User</button>
         <p id="displayCreatedUser"></p>    
     </div>
     <div>
@@ -41,6 +41,19 @@
         </form>
         <button id="resetFindUser">Clear User</button>
         <p id="displayDeletedUser"></p>
+    </div>
+    <div>
+        <hr>
+        <p>Test updating a user's balance</p>
+        <form id="updateUserBalanceForm">
+            <input id="updateBalanceEmail" type="email" name="updateBalanceEmail" placeholder="try jane@mit.edu" />
+            <input id="updatedBalance" type="number" name="updatedBalance" placeholder="enter user's new balance" />
+            <input type="submit">
+        </form>
+        <button id="resetUserBalance">Clear Balance</button>
+        <p id="displayUpdatedUser"></p>
+        <p id="displayUpdatedUserBalance"></p>
+        <p id="oldUserBalance">old balance goes here</p>
     </div>
     <div>
         <hr>
