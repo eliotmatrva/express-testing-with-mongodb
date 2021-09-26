@@ -11,6 +11,19 @@
     <h1>Express Testing with HTML and MongoDB Atlas</h1>
     <div>
         <hr>
+        <p>Test creating a user</p>
+        <form id="createUserForm">
+            <input id="newUserName" type="text" name="newUserName" placeholder="name" />
+            <input id="newUserEmail" type="email" name="newUserEmail" placeholder="email" />
+            <input id="newUserPassword" type="password" name="newUserPassword" placeholder="password" />
+            <input id="newUserBalance" type="number" name="newUserBalance" placeholder="account balance" />
+            <input type="submit">
+        </form>
+        <button id="resetCreatedUser">Clear User</button>
+        <p id="displayCreatedUser"></p>    
+    </div>
+    <div>
+        <hr>
         <p>Test getting a specific user by email</p>
         <form id="getUserForm">
             <input id="email" type="email" name="email" placeholder="try jane@mit.edu" />
@@ -21,26 +34,10 @@
     </div>
     <div>
         <hr>
-        <p>Test creating a user</p>
-        <form id="createUserForm">
-            <input id="newUserName" type="text" name="newUserName" placeholder="name" />
-            <input id="newUserEmail" type="email" name="newUserEmail" placeholder="email" />
-            <input id="newUserPassword" type="password" name="newUserPassword" placeholder="password" />
-            <input id="newUserBalance" type="number" name="newUserBalance" placeholder="account balance" />
-            <input type="submit">
-        </form>
-        <button id="resetAllUsers">Clear User</button>
-        <p id="displayCreatedUser"></p>    
-    </div>
-    <div>
-        <hr>
-        <p>Test deleting a specific user by email</p>
-        <form id="deleteUserForm">
-            <input id="deletedUserEmail" type="email" name="email" placeholder="try jane@mit.edu" />
-            <input type="submit">
-        </form>
-        <button id="resetFindUser">Clear User</button>
-        <p id="displayDeletedUser"></p>
+        <p>Test getting all users</p>
+        <button id="getAllUsers">Click to get all users</button>
+        <button id="resetAllUsers">Clear List</button>
+        <p id="displayAllUsers"></p>    
     </div>
     <div>
         <hr>
@@ -50,18 +47,21 @@
             <input id="updatedBalance" type="number" name="updatedBalance" placeholder="enter user's new balance" />
             <input type="submit">
         </form>
-        <button id="resetUserBalance">Clear Balance</button>
-        <p id="displayUpdatedUser"></p>
-        <p id="displayUpdatedUserBalance"></p>
-        <p id="oldUserBalance">old balance goes here</p>
+        <button id="resetServerResponse">Clear Server Response</button>
+        <p id="serverResponse">Server Response</p>
     </div>
     <div>
         <hr>
-        <p>Test getting all users</p>
-        <button id="getAllUsers">Click to get all users</button>
-        <button id="resetAllUsers">Clear List</button>
-        <p id="displayAllUsers"></p>    
+        <p>Test deleting a specific user by email</p>
+        <form id="deleteUserForm">
+            <input id="deletedUserEmail" type="email" name="email" placeholder="try jane@mit.edu" />
+            <input type="submit">
+        </form>
+        <button id="resetDeletedUser">Clear User</button>
+        <p id="displayDeletedUser"></p>
     </div>
-    <script src="./app.js"></script>
+    
+    
+    <script defer src="./app.js"></script>
 </body>
 </html>

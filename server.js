@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-// const bodyParser = require('body-parser');
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -18,7 +17,7 @@ MongoClient.connect(uri)
         usersCollection = db.collection('users');
     });
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 app.get('/', function(req, res) {
     res.send("hello user.  Try using the api endpoints to get some data");
@@ -31,16 +30,8 @@ app.get('/api/users', (req, res) => {
             res.send(result); 
         });
 });
-/*
-app.get('/api/users/:email', (req, res) => {
-    usersCollection.findOne({email: req.params.email})
-        .then(result => {
-            //console.log('finding your user by email');
-            res.send(result);
-        })    
-});
-*/
-app.post('/users/findUser/:email', (req, res) => {    
+
+app.get('/users/findUser/:email', (req, res) => {    
     if (!req.params.email){
         res.status(400).send('Email is required.');
         return;
@@ -53,7 +44,7 @@ app.post('/users/findUser/:email', (req, res) => {
         });
 });
 
-app.post('/api/users/:name/:email/:password/:balance', (req, res) => {
+app.post('/users/createUser/:name/:email/:password/:balance', (req, res) => {
     // See this URL for help with POST https://youtu.be/pKd0Rpw7O48?t=2076
     usersCollection.insertOne({
         name: req.params.name,
@@ -70,7 +61,7 @@ app.put('/users/updateBalance/:email/:balance', (req, res) => {
     let balance = req.params.balance;
     usersCollection.updateOne(
         {email: email},
-        {$set: {balance: req.balance}})
+        {$set: {balance: balance}})
         .then(result => {
             console.log(`Updated user ${email}'s balance to ${balance}`);
             res.send(result);
